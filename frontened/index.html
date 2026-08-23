@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тралалео Тралала</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel='stylesheet' href='https://flaticon.com'>
+</head>
+
+<body>
+    <section id="registerScreen" class="screen">
+        <div class="register-box">
+            <h1>Регистрация</h1>
+            <form id="registerForm">
+                <label for="registerUsername">Логин</label>
+                <input type="text" id="registerUsername" placeholder="Придумай">
+                <label for="registerPassword">Пароль</label>
+                <input type="password" id="registerPassword" placeholder="Придумай">
+                <label for="registerPassword">Подтвердите пароль</label>
+                <input type="password" id="registerPasswordRepeat" placeholder="Придумай">
+                <Button type="submit">Продолжить</Button>
+            </form>
+            <p>
+                Уже есть аккаунт?
+                <Button type="button" id="openLoginButton">Войти</Button>
+            </p>
+            <p id="registerMessage"> </p>
+        </div>
+    </section>
+    <section id="loginScreen" class="screen hidden">
+        <div class="login-box">
+            <h1>Вход</h1>
+            <form id="loginForm">
+                <label for="loginUsername">Логин</label>
+                <input type="text" id="loginUsername" placeholder="Вспомни">
+                <label for="loginPassword">Пароль</label>
+                <input type="password" id="loginPassword" placeholder="Вспомни">
+                <Button type="submit">Продолжить</Button>
+            </form>
+            <p>
+                Хочешь еще аккаунт?
+                <Button type="button" id="openRegisterButton">Нажми</Button>
+            </p>
+            <p id="loginMessage"> </p>
+        </div>
+    </section>
+
+    <section class="messenger-screen hidden" id="messengerScreen">
+        <header class="top-bar">
+            <div id="accountName" class="account-name">
+                Гость
+            </div>
+
+            <button id="openProfileButton" class="profile-button" type="button">
+                Профиль
+            </button>
+        </header>
+
+        <div class="messenger">
+            <div class="side-bar">
+                <h2>Чаты</h2>
+                <input id="chatSearch" type="text" placeholder="Поиск">
+                <div id="chatList"></div>
+            </div>
+
+            <div class="chat-area">
+                <h2 id="chatTitle">Ai помощник</h2>
+                <div class="messages" id="messages"></div>
+
+                <div class="input-area">
+                    <textarea id="messageInput" placeholder="Напиши cволочь"></textarea>
+
+                    <button class="send-btn" id="sendBtn">
+                        <img src="https://r.mradx.net/imgs/93/b7/bd6c1e64db80f1bc.jpg"  alt="Отправить">
+                        <img src="https://r.mradx.net/imgs/1c/80/5c8614d31eeb4b0e.jpg"  alt="Отправить">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="script.js"></script>
+</body>
+
+</html>

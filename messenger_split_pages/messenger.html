@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тралалео Тралала — мессенджер</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <section class="messenger-screen" id="messengerScreen">
+        <header class="top-bar">
+            <div id="accountName" class="account-name">
+                Гость
+            </div>
+
+            <button id="openProfileButton" class="profile-button" type="button">
+                Профиль
+            </button>
+        </header>
+
+        <div class="messenger">
+            <div class="side-bar">
+                <h2>Чаты</h2>
+                <input id="chatSearch" type="text" placeholder="Поиск">
+                <div id="chatList"></div>
+            </div>
+
+            <div class="chat-area">
+                <h2 id="chatTitle">Ai помощник</h2>
+                <div class="messages" id="messages"></div>
+
+                <div class="input-area">
+                    <textarea id="messageInput" placeholder="Напиши cволочь"></textarea>
+
+                    <button class="send-btn" id="sendBtn">
+                        <img src="https://r.mradx.net/imgs/93/b7/bd6c1e64db80f1bc.jpg" alt="Отправить">
+                        <img src="https://r.mradx.net/imgs/1c/80/5c8614d31eeb4b0e.jpg" alt="Отправить">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="messenger.js"></script>
+</body>
+</html>

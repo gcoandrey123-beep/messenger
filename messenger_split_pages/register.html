@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тралалео Тралала — регистрация</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <section id="registerScreen" class="screen">
+        <div class="register-box">
+            <h1>Регистрация</h1>
+
+            <form id="registerForm">
+                <label for="registerUsername">Логин</label>
+                <input type="text" id="registerUsername" placeholder="Придумай">
+
+                <label for="registerPassword">Пароль</label>
+                <input type="password" id="registerPassword" placeholder="Придумай">
+
+                <label for="registerPasswordRepeat">Подтвердите пароль</label>
+                <input type="password" id="registerPasswordRepeat" placeholder="Придумай">
+
+                <button type="submit">Продолжить</button>
+            </form>
+
+            <p>
+                Уже есть аккаунт?
+                <button type="button" id="openLoginButton">Войти</button>
+            </p>
+
+            <p id="registerMessage"></p>
+        </div>
+    </section>
+
+    <script src="register.js"></script>
+</body>
+</html>
