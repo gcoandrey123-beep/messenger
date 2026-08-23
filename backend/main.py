@@ -33,7 +33,7 @@ app.add_middleware(
 )
 
 
-@app.get("/")
+@app.get("/api")
 def root():
     return {"message": "Messenger API работает"}
 
