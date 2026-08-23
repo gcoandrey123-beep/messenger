@@ -1,3 +1,7 @@
+import os
+
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import RedirectResponse
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
@@ -94,3 +98,13 @@ def get_messages(
     )
 
     return messages
+
+FRONTEND_DIR = os.path.join(os.path.dirname(__file__), "frontend")
+
+
+@app.get("/")
+def frontend_root():
+    return RedirectResponse(url="/register.html")
+
+
+app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="frontend")
