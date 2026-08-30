@@ -22,18 +22,21 @@ const currentUser = JSON.parse(currentUserText);
 let users = [];
 let selectedUser = null;
 
+// Нужен, чтобы не перерисовывать сообщения каждую секунду,
+// если ничего не изменилось.
+let lastMessagesState = "";
 
 accountName.textContent = currentUser.username;
-
 
 openProfileButton.addEventListener("click", function() {
     window.location.href = "profile.html";
 });
 
-
 async function loadUsers() {
     try {
-        const response = await fetch(`${API_URL}/users?current_user_id=${currentUser.id}`);
+        const response = await fetch(
+            `${API_URL}/users?current_user_id=${currentUser.id}`
+        );
 
         if (!response.ok) {
             chatList.textContent = "Не удалось загрузить пользователей";
@@ -42,7 +45,13 @@ async function loadUsers() {
 
         users = await response.json();
 
+        restoreSelectedChat();
+
         renderUsers();
+
+        if (selectedUser !== null) {
+            await loadMessages();
+        }
 
     } catch (error) {
         chatList.textContent = "Backend не отвечает";
@@ -50,6 +59,27 @@ async function loadUsers() {
     }
 }
 
+function restoreSelectedChat() {
+    const savedUserId = localStorage.getItem("selectedChatUserId");
+
+    if (savedUserId === null) {
+        return;
+    }
+
+    const userId = Number(savedUserId);
+
+    const savedUser = users.find(function(user) {
+        return user.id === userId;
+    });
+
+    if (savedUser === undefined) {
+        localStorage.removeItem("selectedChatUserId");
+        return;
+    }
+
+    selectedUser = savedUser;
+    chatTitle.textContent = selectedUser.username;
+}
 
 function renderUsers() {
     chatList.innerHTML = "";
@@ -71,26 +101,38 @@ function renderUsers() {
         chat.classList.add("chat");
         chat.textContent = user.username;
 
-        if (selectedUser !== null && selectedUser.id === user.id) {
+        if (
+            selectedUser !== null &&
+            selectedUser.id === user.id
+        ) {
             chat.classList.add("active-chat");
         }
 
-        chat.addEventListener("click", function() {
+        chat.addEventListener("click", async function() {
             selectedUser = user;
+
+            // Запоминаем последний открытый чат.
+            localStorage.setItem(
+                "selectedChatUserId",
+                String(user.id)
+            );
+
             chatTitle.textContent = user.username;
 
+            // Сбрасываем состояние, потому что открыли другой диалог.
+            lastMessagesState = "";
+
             renderUsers();
-            loadMessages();
+
+            await loadMessages();
         });
 
         chatList.appendChild(chat);
     });
 }
 
-
 async function loadMessages() {
     if (selectedUser === null) {
-        messages.innerHTML = "";
         return;
     }
 
@@ -100,29 +142,44 @@ async function loadMessages() {
         );
 
         if (!response.ok) {
-            messages.textContent = "Не удалось загрузить сообщения";
+            console.log("Не удалось загрузить сообщения");
             return;
         }
 
         const dialogMessages = await response.json();
 
+        // Превращаем текущие сообщения в строку,
+        // чтобы понять, изменились они или нет.
+        const newMessagesState = JSON.stringify(dialogMessages);
+
+        if (newMessagesState === lastMessagesState) {
+            return;
+        }
+
+        lastMessagesState = newMessagesState;
+
         renderMessages(dialogMessages);
 
     } catch (error) {
-        messages.textContent = "Backend не отвечает";
-        console.log(error);
+        console.log("Ошибка загрузки сообщений:", error);
     }
 }
-
 
 function renderMessages(dialogMessages) {
     messages.innerHTML = "";
 
     if (dialogMessages.length === 0) {
         const emptyMessage = document.createElement("div");
-        emptyMessage.classList.add("message", "ai-message");
+
+        emptyMessage.classList.add(
+            "message",
+            "ai-message"
+        );
+
         emptyMessage.textContent = "Сообщений пока нет";
+
         messages.appendChild(emptyMessage);
+
         return;
     }
 
@@ -130,13 +187,20 @@ function renderMessages(dialogMessages) {
         const newMessage = document.createElement("div");
 
         if (message.sender_id === currentUser.id) {
-            newMessage.classList.add("message", "my-message");
+            newMessage.classList.add(
+                "message",
+                "my-message"
+            );
         } else {
-            newMessage.classList.add("message", "ai-message");
+            newMessage.classList.add(
+                "message",
+                "ai-message"
+            );
         }
 
         if (isImageLink(message.text)) {
             const image = document.createElement("img");
+
             image.src = message.text;
             image.alt = "Картинка";
             image.classList.add("message-image");
@@ -152,7 +216,6 @@ function renderMessages(dialogMessages) {
     messages.scrollTop = messages.scrollHeight;
 }
 
-
 async function sendMessage() {
     if (selectedUser === null) {
         return;
@@ -164,21 +227,27 @@ async function sendMessage() {
         return;
     }
 
-    const messageType = isImageLink(text) ? "image" : "text";
+    const messageType = isImageLink(text) ?
+        "image" :
+        "text";
 
     try {
-        const response = await fetch(`${API_URL}/messages`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                sender_id: currentUser.id,
-                receiver_id: selectedUser.id,
-                text: text,
-                message_type: messageType
-            })
-        });
+        const response = await fetch(
+            `${API_URL}/messages`, {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    sender_id: currentUser.id,
+                    receiver_id: selectedUser.id,
+                    text: text,
+                    message_type: messageType
+                })
+            }
+        );
 
         if (!response.ok) {
             console.log("Сообщение не отправилось");
@@ -187,31 +256,32 @@ async function sendMessage() {
 
         messageInput.value = "";
 
+        // Сразу обновляем переписку отправителя.
         await loadMessages();
 
     } catch (error) {
-        console.log(error);
+        console.log("Ошибка отправки:", error);
     }
 }
-
 
 sendBtn.addEventListener("click", function() {
     sendMessage();
 });
 
-
 messageInput.addEventListener("keydown", function(event) {
-    if (event.key === "Enter" && event.shiftKey === false) {
+    if (
+        event.key === "Enter" &&
+        event.shiftKey === false
+    ) {
         event.preventDefault();
+
         sendMessage();
     }
 });
 
-
 chatSearch.addEventListener("input", function() {
     renderUsers();
 });
-
 
 function isImageLink(text) {
     const lowerText = text.toLowerCase();
@@ -228,5 +298,13 @@ function isImageLink(text) {
     );
 }
 
-
+// Первоначальная загрузка.
 loadUsers();
+
+// Каждую секунду проверяем,
+// появились ли новые сообщения.
+setInterval(function() {
+    if (selectedUser !== null) {
+        loadMessages();
+    }
+}, 1000);
