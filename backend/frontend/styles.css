@@ -9,6 +9,7 @@ body {
     display: none !important;
 }
 
+
 /* Общие экраны */
 
 .screen {
@@ -19,6 +20,7 @@ body {
     padding: 20px;
     box-sizing: border-box;
 }
+
 
 /* Регистрация */
 
@@ -95,6 +97,7 @@ body {
     color: red;
 }
 
+
 /* Вход */
 
 .login-box {
@@ -169,6 +172,7 @@ body {
     min-height: 20px;
     color: red;
 }
+
 
 /* Мессенджер */
 
@@ -324,6 +328,7 @@ body {
     transform: translateY(4px);
 }
 
+
 /* Профиль */
 
 .profile-box {
@@ -378,4 +383,15 @@ body {
     min-height: 20px;
     color: red;
     text-align: center;
+}
+
+.avatar-img {
+    height: 192px;
+    width: 192px;
+    border-radius: 100%;
+}
+
+.avatar-container {
+    display: flex;
+    justify-content: center;
 }

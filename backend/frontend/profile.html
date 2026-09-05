@@ -1,27 +1,26 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Тралалео Тралала — профиль</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <section id="profileScreen" class="screen">
         <div class="profile-box">
             <h1>Профиль</h1>
 
+            <div class="avatar-container">
+                <img src="../IMAGUS/SUPERPUPER_AVATARKA.jpg" alt="аватар гостика" class="avatar-img">
+            </div>
+
             <p>
                 Логин:
                 <span id="profileUsername">Гость</span>
             </p>
-
-            <label for="inviteLink">Ваша ссылка для создания чата</label>
-            <input id="inviteLink" type="text" readonly>
-
-            <button id="copyInviteButton" type="button">
-                Скопировать ссылку
-            </button>
 
             <button id="backToMessengerButton" type="button">
                 Назад к чатам
@@ -37,4 +36,5 @@
 
     <script src="profile.js"></script>
 </body>
+
 </html>
