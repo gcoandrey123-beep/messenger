@@ -6,6 +6,13 @@ const registerPassword = document.getElementById("registerPassword");
 const registerPasswordRepeat = document.getElementById("registerPasswordRepeat");
 const registerMessage = document.getElementById("registerMessage");
 const openLoginButton = document.getElementById("openLoginButton");
+const codeBlock = document.getElementById("CodeBlock")
+const getCodeButton = document.getElementById("getCodeButton")
+const timerText = document.getElementById("timerText")
+
+let timerId = null
+
+
 
 openLoginButton.addEventListener("click", function() {
     window.location.href = "login.html";
