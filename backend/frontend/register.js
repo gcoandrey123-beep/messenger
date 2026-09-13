@@ -6,13 +6,34 @@ const registerPassword = document.getElementById("registerPassword");
 const registerPasswordRepeat = document.getElementById("registerPasswordRepeat");
 const registerMessage = document.getElementById("registerMessage");
 const openLoginButton = document.getElementById("openLoginButton");
-const codeBlock = document.getElementById("CodeBlock")
-const getCodeButton = document.getElementById("getCodeButton")
-const timerText = document.getElementById("timerText")
+const codeBlock = document.getElementById("CodeBlock");
+const getCodeButton = document.getElementById("getCodeButton");
+const timerText = document.getElementById("timerText");
 
-let timerId = null
+let timerId = null;
 
-
+getCodeButton.addEventListener("click", function() {
+    codeBlock.classList.remove("hidden");
+    let seconds = 120;
+    timerText.textContent = "02:00";
+    if (timerId !== null) {
+        clearInterval(timerId);
+    }
+    timerId = setInterval(function() {
+        seconds--;
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = seconds % 60;
+        timerText.textContent =
+            String(minutes).padStart(2, "0") +
+            ":" +
+            String(remainingSeconds).padStart(2, "0");
+        if (seconds <= 0) {
+            clearInterval(timerId);
+            timerId = null;
+            timerText.textContent = "00:00";
+        }
+    }, 1000);
+});
 
 openLoginButton.addEventListener("click", function() {
     window.location.href = "login.html";
