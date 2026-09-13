@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Тралалео Тралала — регистрация</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <section id="registerScreen" class="screen">
         <div class="register-box">
@@ -21,6 +23,17 @@
                 <label for="registerPasswordRepeat">Подтвердите пароль</label>
                 <input type="password" id="registerPasswordRepeat" placeholder="Придумай">
 
+                <label for="phoneNumber">Номер телефона</label>
+                <div class="phone-field">
+                    <input type="tel" id="phoneNumber" placeholder="Номер телефона из госуслуг">
+                    <button type="button" id="getCodeButton">接收簡訊</button>
+                </div>
+
+                <div id="CodeBlock" class="hidden">
+                    <p>Код предет в течение <span id="timerText">2:00</span> </p>
+                    <input type="text" placeholder="Сюда надо ввести смс">
+                </div>
+
                 <button type="submit">Продолжить</button>
             </form>
 
@@ -35,4 +48,5 @@
 
     <script src="register.js"></script>
 </body>
+
 </html>
