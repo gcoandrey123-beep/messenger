@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="ru">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Тралалео Тралала — профиль</title>
-    <link rel="stylesheet" href="styles.css">
+<head></head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Тралалео Тралала — профиль</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -17,10 +17,16 @@
                 <img src="IMAGUS/SUPERPUPER_AVATARKA.jpg" alt="аватар гостика" class="avatar-img">
             </div>
 
-            <p>
+            <p class="username-row">
                 Логин:
                 <span id="profileUsername">Гость</span>
+                <button id="editName" class="edit-name" type="button"><img src="IMAGUS/pencil.png" alt="менять гостика"></button>
             </p>
+
+            <div class="hidden" id="usernameEditBlock">
+                <input type="text" id="usernameInput">
+                <button type="button" id="saveUsernameButton">Не сохранишь гей</button>
+            </div>
 
             <button id="backToMessengerButton" type="button">
                 Назад к чатам

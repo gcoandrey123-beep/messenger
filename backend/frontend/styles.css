@@ -417,3 +417,24 @@ body {
     padding: 0 6px;
     font-size: 12px;
 }
+
+.edit-name img {
+    width: 20px;
+    height: 20px;
+    display: block;
+}
+
+.username-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.profile-box .edit-name {
+    width: auto;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
