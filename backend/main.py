@@ -15,7 +15,8 @@ from schemas import (
     UserLogin,
     UserResponse,
     MessageCreate,
-    MessageResponse
+    MessageResponse,
+    UserUpdate
 )
 
 
@@ -99,16 +100,6 @@ def get_messages(
 
     return messages
 
-FRONTEND_DIR = os.path.join(os.path.dirname(__file__), "frontend")
-
-
-@app.get("/")
-def frontend_root():
-    return FileResponse(os.path.join(FRONTEND_DIR, "register.html"))
-
-
-app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="frontend")
-
 @app.patch("/users/{user_id}", response_model=UserResponse)
 def update_user(
     user_id: int,
@@ -142,3 +133,13 @@ def update_user(
         )
 
     return user
+
+FRONTEND_DIR = os.path.join(os.path.dirname(__file__), "frontend")
+
+
+@app.get("/")
+def frontend_root():
+    return FileResponse(os.path.join(FRONTEND_DIR, "register.html"))
+
+
+app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="frontend")
