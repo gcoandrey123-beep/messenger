@@ -34,3 +34,6 @@ class MessageResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+class UserUpdate(BaseModel):
+    username: str

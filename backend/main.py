@@ -108,3 +108,37 @@ def frontend_root():
 
 
 app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="frontend")
+
+@app.patch("/users/{user_id}", response_model=UserResponse)
+def update_user(
+    user_id: int,
+    user_data: UserUpdate,
+    db: Session = Depends(get_db)
+):
+    existing_user = crud.get_user_by_username(
+        db,
+        user_data.username
+    )
+
+    if (
+        existing_user is not None
+        and existing_user.id != user_id
+    ):
+        raise HTTPException(
+            status_code=400,
+            detail="Такой логин уже занят"
+        )
+
+    user = crud.update_username(
+        db,
+        user_id,
+        user_data.username
+    )
+
+    if user is None:
+        raise HTTPException(
+            status_code=404,
+            detail="Пользователь не найден"
+        )
+
+    return user

@@ -90,3 +90,16 @@ def get_dialog_messages(db: Session, user_id: int, other_user_id: int):
         .order_by(Message.id.asc())
         .all()
     )
+
+def update_username(db: Session, user_id: int, username: str):
+    user = db.query(User).filter(User.id == user_id).first()
+
+    if user is None:
+        return None
+
+    user.username = username
+
+    db.commit()
+    db.refresh(user)
+
+    return user
